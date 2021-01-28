@@ -23,13 +23,13 @@ const {defaultLocale} = require('../site/_data/site');
  * with the path being modified based on it's local.
  *
  * If the content is in the default locale (en), we remove the default local from the path.
- * If the `inputPath`/`permalink` is not of the default locale we add `localized-files`
- * to the path, so that the locale's folder is in a `localized-files` folder.
+ * If the `inputPath`/`permalink` is not of the default locale we add `i18n`
+ * to the path, so that the locale's folder is in a `i18n` folder.
  *
  * @example outputPermalink({page: {inputPath: '/src/site/content/en/index.html'}}); // '/'
- * @example outputPermalink({page: {inputPath: '/src/site/content/pl/index.html'}}); // '/localized-files/pl/'
+ * @example outputPermalink({page: {inputPath: '/src/site/content/pl/index.html'}}); // '/i18n/pl/'
  * @example outputPermalink({permalink: 'en/index.html'}); // '/'
- * @example outputPermalink({permalink: 'pl/index.html'}); // '/localized-files/pl/'
+ * @example outputPermalink({permalink: 'pl/index.html'}); // '/i18n/pl/'
  *
  * @param {TODO} data
  * @returns {string}
@@ -41,12 +41,12 @@ module.exports = (data) => {
   if (data.permalink) {
     return data.permalink.replace(
       /^\/{{lang}}/,
-      localization ? '/localized-files/{{lang}}' : '/',
+      localization ? '/i18n/{{lang}}' : '/',
     );
   }
 
   return data.page.inputPath
-    .replace(/^.\/src\/site\/content/, localization ? 'localized-files/' : '')
+    .replace(/^.\/src\/site\/content/, localization ? 'i18n/' : '')
     .replace(/index.(md|njk)$/, '')
     .replace(/(md|njk)$/, 'html')
     .replace(defaultLocaleRegExp, '/');
